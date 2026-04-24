@@ -14,11 +14,11 @@ Our main topic is daily weather patterns in State College, Pennsylvania.
 
 Main variables of interest:
 
-- TMAX or maximum temperature
-- TMIN or minimum temperature
-- PRCP or precipitation
-- SNOW or snowfall
-- SNWD or snow depth
+- TMAX: (maximum temperature)
+- TMIN: (minimum temperature)
+- PRCP: (precipitation)
+- SNOW: (snowfall)
+- SNWD: (snow depth)
 
 Within this broader project, we are especially interested in exploring rainfall and precipitation patterns in State College over time.
 
