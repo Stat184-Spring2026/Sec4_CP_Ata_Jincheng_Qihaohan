@@ -1,0 +1,324 @@
+---
+title: "Exploring Daily Weather Patterns in State College, Pennsylvania"
+author:
+  - "Ata"
+  - "Jincheng"
+  - "Qihaohan"
+date: "2026-04-25"
+format:
+  pdf:
+    toc: true
+    number-sections: true
+    fig-pos: "H"
+execute:
+  echo: false
+  warning: false
+  message: false
+---
+
+# Introduction
+
+This report explores daily weather patterns in State College, Pennsylvania using daily station-level weather records from NOAA Climate Data Online. The purpose of the analysis is to understand how local weather varies across years, months, and seasons. The project focuses on maximum temperature, minimum temperature, precipitation, snowfall, and snow depth.
+
+The main research question is: **What patterns can we observe in daily weather in State College, Pennsylvania over the last ten years?** More specifically, the analysis examines whether State College shows clear seasonal temperature patterns, which months tend to receive more precipitation, and how snowfall varies across years.
+
+# Data Provenance
+
+The data used in this report come from NOAA Climate Data Online, specifically the Global Historical Climatology Network Daily data for the State College, Pennsylvania weather station. The station used for this project is **STATE COLLEGE, PA US**, station ID **GHCND:USC00368449**. The working file for this analysis is `SC_weather_10.csv`.
+
+The dataset contains daily observations. Important original variables include daily maximum temperature (`TMAX`), daily minimum temperature (`TMIN`), precipitation (`PRCP`), snowfall (`SNOW`), and snow depth (`SNWD`). Additional variables were created during data cleaning, including `year`, `month`, `season`, `temp_range`, `rain_day`, `snow_day`, `heavy_prcp_day`, and `freezing_day`.
+
+Because the data come from NOAA, a public scientific data provider, the dataset is appropriate for reproducible exploratory data analysis. However, the analysis should still be interpreted carefully because 2016 and 2026 are partial years in the current file, rather than complete calendar years.
+
+# FAIR and CARE Principles
+
+The dataset generally satisfies the **FAIR principles**. It is findable because it can be located through NOAA Climate Data Online using the station ID. It is accessible because NOAA provides public access to daily weather station data. It is interoperable because the data are stored in a standard CSV format and use common weather variables. It is reusable because the data include clear variable names, station information, and measurement records that can be analyzed in R.
+
+The **CARE principles** are less directly applicable because this project does not use Indigenous data or community-owned cultural data. However, the project still follows the spirit of responsible data use by clearly describing the source, avoiding unsupported causal claims, and using the data only for exploratory weather analysis. The report also acknowledges NOAA as the original data provider and maintains transparency about created variables and partial-year observations.
+
+# Exploratory Data Analysis
+
+## Annual Weather Summary
+
+Table @tbl-annual-summary summarizes the annual weather records. Complete years generally contain 365 or 366 days, while 2016 and 2026 are partial years in this file. For that reason, comparisons involving total precipitation or total snowfall should focus mainly on complete years.
+
+| Year | Days observed | Avg. Maximum Temp | Avg. Minimum Temp | Avg. Daily Temp Range | Total Precipitation | Total Snowfall | Max Snow Depth | Rain Days | Snow Days | Freezing Days |
+|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| 2016 | 256 | 67.6 | 50.5 | 17.1 | 24.89 | 7.0 | 4 | 102 | 7 | 36 |
+| 2017 | 365 | 59.4 | 43.3 | 16.2 | 42.19 | 37.7 | 10 | 161 | 23 | 114 |
+| 2018 | 365 | 57.9 | 42.8 | 15.1 | 63.75 | 39.1 | 11 | 184 | 24 | 131 |
+| 2019 | 365 | 59.0 | 42.4 | 16.6 | 41.50 | 32.5 | 7 | 155 | 23 | 128 |
+| 2020 | 366 | 60.9 | 43.9 | 17.0 | 39.10 | 25.2 | 13 | 151 | 19 | 110 |
+| 2021 | 365 | 61.7 | 44.0 | 17.7 | 45.94 | 32.3 | 12 | 157 | 31 | 121 |
+| 2022 | 365 | 60.8 | 41.7 | 19.1 | 39.80 | 43.0 | 5 | 147 | 26 | 130 |
+| 2023 | 365 | 61.9 | 44.0 | 18.0 | 39.97 | 11.1 | 2 | 154 | 16 | 102 |
+| 2024 | 366 | 61.6 | 44.4 | 17.2 | 43.18 | 28.0 | 5 | 144 | 19 | 100 |
+| 2025 | 365 | 59.6 | 42.3 | 17.3 | 38.36 | 21.8 | 4 | 142 | 28 | 122 |
+| 2026 | 110 | 45.0 | 27.2 | 17.9 | 9.17 | 20.5 | 10 | 40 | 11 | 67 |
+
+: Annual weather summary for State College, PA. {#tbl-annual-summary}
+
+The table shows that annual average maximum temperatures for complete years are mostly near the upper 50s to low 60s in degrees Fahrenheit. The largest annual precipitation total appears in 2018, while 2022 has the largest total snowfall among the complete years shown.
+
+## Annual Temperature Pattern
+
+![Line graph showing average annual maximum and minimum temperatures in State College, Pennsylvania. The two lines show that complete-year average maximum temperatures usually stay near the upper 50s to low 60s, while average minimum temperatures usually stay in the low to mid 40s. The partial year 2026 appears much colder because it does not include a full calendar year.](figures/annual_temperature.png){#fig-annual-temperature width="85%" fig-alt="Line graph of average daily maximum and minimum temperature by year in State College, PA. Complete years show relatively stable average temperatures, while the partial year 2026 is lower because only part of the year is included."}
+
+Figure @fig-annual-temperature shows that the annual temperature pattern is relatively stable for complete years. Average maximum temperature usually remains close to 60°F, while average minimum temperature is generally in the low to mid 40s. The sharp drop in 2026 should not be interpreted as a long-term cooling pattern because 2026 is only a partial year in the dataset.
+
+## Monthly Weather Summary
+
+Table @tbl-monthly-summary compares monthly averages and totals across the full dataset. This table helps show the seasonal structure of weather in State College.
+
+| Month | Avg. Maximum Temp | Avg. Minimum Temp | Median Daily Precipitation | Total Precipitation | Total Snowfall | Rain Days | Snow Days |
+|:---|---:|---:|---:|---:|---:|---:|---:|
+| January | 35.4 | 22.1 | 0.00 | 28.07 | 88.9 | 137 | 65 |
+| February | 40.5 | 24.0 | 0.00 | 29.08 | 76.4 | 113 | 58 |
+| March | 49.0 | 30.3 | 0.00 | 30.71 | 44.3 | 134 | 33 |
+| April | 60.5 | 41.1 | 0.01 | 36.72 | 9.6 | 159 | 6 |
+| May | 69.1 | 51.2 | 0.01 | 48.86 | 0.0 | 160 | 0 |
+| June | 77.7 | 59.7 | 0.00 | 38.98 | 0.0 | 125 | 0 |
+| July | 83.3 | 65.3 | 0.00 | 42.65 | 0.0 | 127 | 0 |
+| August | 80.6 | 63.0 | 0.00 | 43.21 | 0.0 | 124 | 0 |
+| September | 74.3 | 55.9 | 0.00 | 37.83 | 0.0 | 108 | 0 |
+| October | 63.6 | 45.1 | 0.00 | 34.70 | 0.0 | 119 | 0 |
+| November | 49.8 | 33.2 | 0.00 | 26.01 | 21.9 | 97 | 18 |
+| December | 39.5 | 26.5 | 0.00 | 31.03 | 57.1 | 134 | 47 |
+
+: Monthly weather summary for State College, PA. {#tbl-monthly-summary}
+
+The monthly table shows a clear seasonal temperature cycle. July has the highest average maximum temperature, while January has the lowest average maximum and minimum temperatures. Snowfall is concentrated in winter and early spring months, especially January, February, March, and December.
+
+## Monthly Precipitation
+
+![Bar chart showing total precipitation by month in State College, Pennsylvania. May has the highest total precipitation, while November has one of the lowest totals. Precipitation occurs in all months, but the total amount varies by season.](figures/monthly_precipitation.png){#fig-monthly-precipitation width="85%" fig-alt="Bar chart of total precipitation by month in State College, PA. May has the highest precipitation total, and precipitation is present across all months."}
+
+Figure @fig-monthly-precipitation shows that precipitation is not limited to one season. May has the highest total precipitation in the summarized dataset, while late fall and winter months tend to be lower than spring and summer months. This supports the idea that rainfall and precipitation in State College occur throughout the year but vary by month.
+
+## Distribution of Daily Precipitation
+
+![Histogram showing the distribution of daily precipitation. Most observations are near zero, with a long right tail for days with heavier precipitation.](figures/precipitation_distribution.png){#fig-precip-distribution width="85%" fig-alt="Histogram of daily precipitation in State College, PA. Most days have little or no precipitation, while a small number of days have much larger precipitation totals."}
+
+Figure @fig-precip-distribution shows that daily precipitation is strongly right-skewed. Most days have little or no precipitation, while a small number of days have much larger precipitation values. This explains why the median daily precipitation in many months is 0.00 even though the monthly total precipitation is not zero.
+
+## Seasonal Temperature Distribution
+
+![Boxplots showing the distribution of daily maximum temperature by season. Summer has the highest median and the narrowest warm-season range, while winter has the lowest median and several warmer outliers. Spring and fall show wider transition-season variation.](figures/seasonal_temperature_boxplot.png){#fig-seasonal-temp width="85%" fig-alt="Boxplots of daily maximum temperature by season in State College, PA. Summer has the highest daily maximum temperatures, winter has the lowest, and spring and fall show wider transitional variation."}
+
+Figure @fig-seasonal-temp shows that daily maximum temperatures differ strongly by season. Summer has the highest median daily maximum temperature, while winter has the lowest. Spring and fall show broader variation because they are transition seasons.
+
+## Annual Snowfall
+
+![Bar chart showing total snowfall by year in State College, Pennsylvania. Snowfall varies substantially by year, with 2022 among the highest complete years and 2023 among the lowest complete years.](figures/annual_snowfall.png){#fig-annual-snowfall width="85%" fig-alt="Bar chart of total snowfall by year in State College, PA. Annual snowfall varies substantially, with 2022 high and 2023 low among complete years."}
+
+Figure @fig-annual-snowfall shows that snowfall varies substantially from year to year. Among the complete years, 2022 has the highest total snowfall, while 2023 has a much lower snowfall total. This suggests that winter weather in State College can vary considerably even when annual average temperatures are relatively stable.
+
+# Overall Data Story
+
+The exploratory analysis shows that State College has a strong seasonal weather pattern. Temperatures are lowest in winter, rise through spring, peak in summer, and decline through fall. Precipitation occurs throughout the year, but the monthly totals suggest that spring and summer months can contribute heavily to annual precipitation. Snowfall is concentrated in winter and early spring, but the total amount of snowfall varies considerably across years.
+
+The analysis also highlights the importance of distinguishing daily distributions from monthly or annual totals. For example, many days have no precipitation, but enough rainy days and heavier precipitation events accumulate to create meaningful monthly totals. Similarly, annual averages can look stable while snowfall varies strongly across years.
+
+The partial-year observations for 2016 and 2026 are important context. These years should not be compared directly with full years when interpreting total precipitation, total snowfall, or annual average temperature.
+
+# Open Science and Reproducibility
+
+This project follows open science principles by using a public data source, documenting the data provenance, keeping analysis code in a reproducible R workflow, and reporting created variables clearly. The final project repository should include the raw CSV file, the QMD report, generated figures, citation files, and any scripts used to clean and analyze the data.
+
+The project also applies PCIP by making the report readable for a broad audience, using clear captions and alt text, and avoiding unsupported claims. The analysis is exploratory rather than causal, so the report focuses on describing patterns rather than claiming that one weather pattern causes another.
+
+# Author Contributions
+
+- **Ata:** Contributed to project planning, data interpretation, and review of weather summaries.
+- **Jincheng:** Contributed to table review, figure interpretation, and report organization.
+- **Qihaohan:** Primary author for the R data cleaning and analysis workflow; contributed to figure generation and report writing.
+
+# Code Appendix
+
+The following code was used to read, clean, summarize, and visualize the data. Code is placed in the appendix so that the main body of the report focuses on interpretation.
+
+```{r}
+# Style Guide: tidyverse style guide
+# Code Header:
+# Primary author: Qihaohan
+# Reviewer: Ata / Jincheng
+
+library(tidyverse)
+library(lubridate)
+library(knitr)
+library(scales)
+```
+
+```{r}
+# Code Header:
+# Primary author: Qihaohan
+# Reviewer: Ata / Jincheng
+
+weather_raw <- read_csv("SC_weather_10.csv", show_col_types = FALSE)
+```
+
+```{r}
+# Code Header:
+# Primary author: Qihaohan
+# Reviewer: Ata / Jincheng
+
+weather_clean <- weather_raw |>
+  rename_with(tolower) |>
+  mutate(
+    date = as_date(date),
+    year = year(date),
+    month_num = month(date),
+    month = month(date, label = TRUE, abbr = FALSE, locale = "en_US"),
+    month = factor(
+      month,
+      levels = month.name
+    ),
+    season = case_when(
+      month_num %in% c(12, 1, 2) ~ "Winter",
+      month_num %in% c(3, 4, 5) ~ "Spring",
+      month_num %in% c(6, 7, 8) ~ "Summer",
+      month_num %in% c(9, 10, 11) ~ "Fall",
+      TRUE ~ NA_character_
+    ),
+    season = factor(
+      season,
+      levels = c("Winter", "Spring", "Summer", "Fall")
+    ),
+    temp_range = tmax - tmin,
+    rain_day = prcp > 0,
+    snow_day = snow > 0,
+    heavy_prcp_day = prcp >= 1,
+    freezing_day = tmin <= 32
+  )
+```
+
+```{r}
+# Code Header:
+# Primary author: Qihaohan
+# Reviewer: Ata / Jincheng
+
+annual_summary <- weather_clean |>
+  group_by(year) |>
+  summarize(
+    days_observed = n(),
+    avg_maximum_temp = mean(tmax, na.rm = TRUE),
+    avg_minimum_temp = mean(tmin, na.rm = TRUE),
+    avg_daily_temp_range = mean(temp_range, na.rm = TRUE),
+    total_precipitation = sum(prcp, na.rm = TRUE),
+    total_snowfall = sum(snow, na.rm = TRUE),
+    max_snow_depth = max(snwd, na.rm = TRUE),
+    rain_days = sum(rain_day, na.rm = TRUE),
+    snow_days = sum(snow_day, na.rm = TRUE),
+    freezing_days = sum(freezing_day, na.rm = TRUE),
+    .groups = "drop"
+  )
+```
+
+```{r}
+# Code Header:
+# Primary author: Qihaohan
+# Reviewer: Ata / Jincheng
+
+monthly_summary <- weather_clean |>
+  group_by(month) |>
+  summarize(
+    avg_maximum_temp = mean(tmax, na.rm = TRUE),
+    avg_minimum_temp = mean(tmin, na.rm = TRUE),
+    median_daily_precipitation = median(prcp, na.rm = TRUE),
+    total_precipitation = sum(prcp, na.rm = TRUE),
+    total_snowfall = sum(snow, na.rm = TRUE),
+    rain_days = sum(rain_day, na.rm = TRUE),
+    snow_days = sum(snow_day, na.rm = TRUE),
+    .groups = "drop"
+  )
+```
+
+```{r}
+# Code Header:
+# Primary author: Qihaohan
+# Reviewer: Ata / Jincheng
+
+annual_temperature_plot <- ggplot(annual_summary, aes(x = year)) +
+  geom_line(aes(y = avg_maximum_temp, linetype = "Average maximum"), linewidth = 1) +
+  geom_point(aes(y = avg_maximum_temp, shape = "Average maximum"), size = 2) +
+  geom_line(aes(y = avg_minimum_temp, linetype = "Average minimum"), linewidth = 1) +
+  geom_point(aes(y = avg_minimum_temp, shape = "Average minimum"), size = 2) +
+  labs(
+    title = "Average Daily Temperature by Year in State College, PA",
+    subtitle = "NOAA daily weather station data",
+    x = "Year",
+    y = "Temperature (°F)",
+    linetype = "Measure",
+    shape = "Measure",
+    caption = "Data source: NOAA Climate Data Online, GHCND:USC00368449"
+  ) +
+  theme_minimal()
+```
+
+```{r}
+# Code Header:
+# Primary author: Qihaohan
+# Reviewer: Ata / Jincheng
+
+monthly_precipitation_plot <- ggplot(monthly_summary, aes(x = month, y = total_precipitation)) +
+  geom_col() +
+  labs(
+    title = "Total Precipitation by Month in State College, PA",
+    subtitle = "Monthly totals aggregated across the ten-year dataset",
+    x = "Month",
+    y = "Total precipitation",
+    caption = "Data source: NOAA Climate Data Online, GHCND:USC00368449"
+  ) +
+  theme_minimal()
+```
+
+```{r}
+# Code Header:
+# Primary author: Qihaohan
+# Reviewer: Ata / Jincheng
+
+seasonal_temperature_plot <- ggplot(weather_clean, aes(x = season, y = tmax)) +
+  geom_boxplot() +
+  labs(
+    title = "Distribution of Daily Maximum Temperature by Season",
+    subtitle = "Boxplots show seasonal differences in daily high temperatures",
+    x = "Season",
+    y = "Daily maximum temperature (°F)",
+    caption = "Data source: NOAA Climate Data Online, GHCND:USC00368449"
+  ) +
+  theme_minimal()
+```
+
+```{r}
+# Code Header:
+# Primary author: Qihaohan
+# Reviewer: Ata / Jincheng
+
+precipitation_distribution_plot <- ggplot(weather_clean, aes(x = prcp)) +
+  geom_histogram(bins = 35) +
+  labs(
+    title = "Distribution of Daily Precipitation",
+    subtitle = "Most days have little or no measured precipitation",
+    x = "Daily precipitation",
+    y = "Number of days",
+    caption = "Data source: NOAA Climate Data Online, GHCND:USC00368449"
+  ) +
+  theme_minimal()
+```
+
+```{r}
+# Code Header:
+# Primary author: Qihaohan
+# Reviewer: Ata / Jincheng
+
+annual_snowfall_plot <- ggplot(annual_summary, aes(x = factor(year), y = total_snowfall)) +
+  geom_col() +
+  labs(
+    title = "Total Snowfall by Year in State College, PA",
+    subtitle = "Annual snowfall totals from daily NOAA records",
+    x = "Year",
+    y = "Total snowfall",
+    caption = "Data source: NOAA Climate Data Online, GHCND:USC00368449"
+  ) +
+  theme_minimal()
+```
