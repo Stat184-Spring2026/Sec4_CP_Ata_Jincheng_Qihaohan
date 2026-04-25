@@ -4,6 +4,7 @@
 # Data source: NOAA Climate Data Online, station GHCND:USC00368449
 
 # Load Packages ----
+install.packages("janitor")
 library(tidyverse)
 library(lubridate)
 library(knitr)
