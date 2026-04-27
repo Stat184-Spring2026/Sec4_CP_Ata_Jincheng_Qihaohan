@@ -40,7 +40,7 @@ The **CARE principles** are less directly applicable because this project does n
 
 ## Annual Weather Summary
 
-Table @tbl-annual-summary summarizes the annual weather records. Complete years generally contain 365 or 366 days, while 2016 and 2026 are partial years in this file. For that reason, comparisons involving total precipitation or total snowfall should focus mainly on complete years.
+@tbl-annual-summary summarizes the annual weather records. Complete years generally contain 365 or 366 days, while 2016 and 2026 are partial years in this file. For that reason, comparisons involving total precipitation or total snowfall should focus mainly on complete years.
 
 | Year | Days observed | Avg. Maximum Temp | Avg. Minimum Temp | Avg. Daily Temp Range | Total Precipitation | Total Snowfall | Max Snow Depth | Rain Days | Snow Days | Freezing Days |
 |---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
@@ -64,11 +64,11 @@ The table shows that annual average maximum temperatures for complete years are 
 
 ![Line graph showing average annual maximum and minimum temperatures in State College, Pennsylvania. The two lines show that complete-year average maximum temperatures usually stay near the upper 50s to low 60s, while average minimum temperatures usually stay in the low to mid 40s. The partial year 2026 appears much colder because it does not include a full calendar year.](figures/annual_temperature.png){#fig-annual-temperature width="85%" fig-alt="Line graph of average daily maximum and minimum temperature by year in State College, PA. Complete years show relatively stable average temperatures, while the partial year 2026 is lower because only part of the year is included."}
 
-Figure @fig-annual-temperature shows that the annual temperature pattern is relatively stable for complete years. Average maximum temperature usually remains close to 60°F, while average minimum temperature is generally in the low to mid 40s. The sharp drop in 2026 should not be interpreted as a long-term cooling pattern because 2026 is only a partial year in the dataset.
+@fig-annual-temperature shows that the annual temperature pattern is relatively stable for complete years. Average maximum temperature usually remains close to 60°F, while average minimum temperature is generally in the low to mid 40s. The sharp drop in 2026 should not be interpreted as a long-term cooling pattern because 2026 is only a partial year in the dataset.
 
 ## Monthly Weather Summary
 
-Table @tbl-monthly-summary compares monthly averages and totals across the full dataset. This table helps show the seasonal structure of weather in State College.
+@tbl-monthly-summary compares monthly averages and totals across the full dataset. This table helps show the seasonal structure of weather in State College.
 
 | Month | Avg. Maximum Temp | Avg. Minimum Temp | Median Daily Precipitation | Total Precipitation | Total Snowfall | Rain Days | Snow Days |
 |:---|---:|---:|---:|---:|---:|---:|---:|
@@ -93,25 +93,25 @@ The monthly table shows a clear seasonal temperature cycle. July has the highest
 
 ![Bar chart showing total precipitation by month in State College, Pennsylvania. May has the highest total precipitation, while November has one of the lowest totals. Precipitation occurs in all months, but the total amount varies by season.](figures/monthly_precipitation.png){#fig-monthly-precipitation width="85%" fig-alt="Bar chart of total precipitation by month in State College, PA. May has the highest precipitation total, and precipitation is present across all months."}
 
-Figure @fig-monthly-precipitation shows that precipitation is not limited to one season. May has the highest total precipitation in the summarized dataset, while late fall and winter months tend to be lower than spring and summer months. This supports the idea that rainfall and precipitation in State College occur throughout the year but vary by month.
+@fig-monthly-precipitation shows that precipitation is not limited to one season. May has the highest total precipitation in the summarized dataset, while late fall and winter months tend to be lower than spring and summer months. This supports the idea that rainfall and precipitation in State College occur throughout the year but vary by month.
 
 ## Distribution of Daily Precipitation
 
 ![Histogram showing the distribution of daily precipitation. Most observations are near zero, with a long right tail for days with heavier precipitation.](figures/precipitation_distribution.png){#fig-precip-distribution width="85%" fig-alt="Histogram of daily precipitation in State College, PA. Most days have little or no precipitation, while a small number of days have much larger precipitation totals."}
 
-Figure @fig-precip-distribution shows that daily precipitation is strongly right-skewed. Most days have little or no precipitation, while a small number of days have much larger precipitation values. This explains why the median daily precipitation in many months is 0.00 even though the monthly total precipitation is not zero.
+@fig-precip-distribution shows that daily precipitation is strongly right-skewed. Most days have little or no precipitation, while a small number of days have much larger precipitation values. This explains why the median daily precipitation in many months is 0.00 even though the monthly total precipitation is not zero.
 
 ## Seasonal Temperature Distribution
 
 ![Boxplots showing the distribution of daily maximum temperature by season. Summer has the highest median and the narrowest warm-season range, while winter has the lowest median and several warmer outliers. Spring and fall show wider transition-season variation.](figures/seasonal_temperature_boxplot.png){#fig-seasonal-temp width="85%" fig-alt="Boxplots of daily maximum temperature by season in State College, PA. Summer has the highest daily maximum temperatures, winter has the lowest, and spring and fall show wider transitional variation."}
 
-Figure @fig-seasonal-temp shows that daily maximum temperatures differ strongly by season. Summer has the highest median daily maximum temperature, while winter has the lowest. Spring and fall show broader variation because they are transition seasons.
+@fig-seasonal-temp shows that daily maximum temperatures differ strongly by season. Summer has the highest median daily maximum temperature, while winter has the lowest. Spring and fall show broader variation because they are transition seasons.
 
 ## Annual Snowfall
 
 ![Bar chart showing total snowfall by year in State College, Pennsylvania. Snowfall varies substantially by year, with 2022 among the highest complete years and 2023 among the lowest complete years.](figures/annual_snowfall.png){#fig-annual-snowfall width="85%" fig-alt="Bar chart of total snowfall by year in State College, PA. Annual snowfall varies substantially, with 2022 high and 2023 low among complete years."}
 
-Figure @fig-annual-snowfall shows that snowfall varies substantially from year to year. Among the complete years, 2022 has the highest total snowfall, while 2023 has a much lower snowfall total. This suggests that winter weather in State College can vary considerably even when annual average temperatures are relatively stable.
+@fig-annual-snowfall shows that snowfall varies substantially from year to year. Among the complete years, 2022 has the highest total snowfall, while 2023 has a much lower snowfall total. This suggests that winter weather in State College can vary considerably even when annual average temperatures are relatively stable.
 
 # Overall Data Story
 
