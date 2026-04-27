@@ -168,10 +168,13 @@ weather_clean <- weather_raw |>
     date = as_date(date),
     year = year(date),
     month_num = month(date),
-    month = month(date, label = TRUE, abbr = FALSE, locale = "en_US"),
     month = factor(
-      month,
-      levels = month.name
+      month_num,
+      levels = 1:12,
+      labels = c(
+        "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+        "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+      )
     ),
     season = case_when(
       month_num %in% c(12, 1, 2) ~ "Winter",
@@ -231,6 +234,24 @@ monthly_summary <- weather_clean |>
     snow_days = sum(snow_day, na.rm = TRUE),
     .groups = "drop"
   )
+monthly_precipitation_plot <- ggplot(monthly_summary, aes(x = month, y = total_precipitation)) +
+  geom_col() +
+  labs(
+    title = "Total Precipitation by Month in State College, PA",
+    subtitle = "Monthly totals aggregated across the ten-year dataset",
+    x = "Month",
+    y = "Total precipitation",
+    caption = "Data source: NOAA Climate Data Online, GHCND:USC00368449"
+  ) +
+  theme_minimal()
+
+ggsave(
+  filename = "figures/monthly_precipitation.png",
+  plot = monthly_precipitation_plot,
+  width = 7,
+  height = 4.5,
+  dpi = 300
+)
 ```
 
 ```{r}
