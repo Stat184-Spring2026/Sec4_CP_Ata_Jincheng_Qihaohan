@@ -151,8 +151,8 @@ library(scales)
 
 ```{r}
 # Code Header:
-# Primary author: Qihaohan
-# Reviewer: Ata / Jincheng
+# Primary author: Ata
+# Reviewer: Qihaohan / Jincheng
 
 weather_raw <- read_csv("SC_weather_10.csv", show_col_types = FALSE)
 ```
@@ -219,8 +219,8 @@ annual_summary <- weather_clean |>
 
 ```{r}
 # Code Header:
-# Primary author: Qihaohan
-# Reviewer: Ata / Jincheng
+# Primary author: Ata
+# Reviewer: Qihaohan / Jincheng
 
 monthly_summary <- weather_clean |>
   group_by(month) |>
@@ -256,8 +256,8 @@ ggsave(
 
 ```{r}
 # Code Header:
-# Primary author: Qihaohan
-# Reviewer: Ata / Jincheng
+# Primary author: Jincheng
+# Reviewer: Ata / Qihaohan
 
 annual_temperature_plot <- ggplot(annual_summary, aes(x = year)) +
   geom_line(aes(y = avg_maximum_temp, linetype = "Average maximum"), linewidth = 1) +
@@ -278,8 +278,8 @@ annual_temperature_plot <- ggplot(annual_summary, aes(x = year)) +
 
 ```{r}
 # Code Header:
-# Primary author: Qihaohan
-# Reviewer: Ata / Jincheng
+# Primary author: Jincheng
+# Reviewer: Ata / Qihaohan
 
 monthly_precipitation_plot <- ggplot(monthly_summary, aes(x = month, y = total_precipitation)) +
   geom_col() +
