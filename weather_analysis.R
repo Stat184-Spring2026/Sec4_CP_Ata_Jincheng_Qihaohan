@@ -300,6 +300,22 @@ ggsave(
   dpi = 300
 )
 
+ggsave(
+  filename = "figures/monthly_boxplot_temp.png",
+  plot = fig_monthly_temp_improved,
+  width = 7,
+  height = 4.5,
+  dpi = 300
+)
+
+ggsave(
+  filename = "figures/monthly_temp_pcp_plot.png",
+  plot = fig_monthly_temp_pcp,
+  width = 7,
+  height = 4.5,
+  dpi = 300
+)
+
 # Optional: Display Tables in Console ----
 # Code Header:
 # Primary author: Qihaohan
