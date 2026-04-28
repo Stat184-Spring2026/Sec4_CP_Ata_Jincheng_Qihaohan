@@ -234,7 +234,7 @@ The project also applies PCIP by making the report readable for a broad audience
 # Author Contributions
 
 -   **Ata:** Contributed to project planning, data interpretation, and review of weather summaries.
--   **Jincheng:** Contributed to table review, figure interpretation, and report organization.
+-   **Jincheng:** Contributed to table review, figure interpretation, time-series analysis and report organization.
 -   **Qihaohan:** Primary author for the R data cleaning and analysis workflow; contributed to figure generation and report writing.
 
 # Code Appendix
