@@ -316,6 +316,46 @@ ggsave(
   dpi = 300
 )
 
+ggsave(
+  filename = "figures/within_cycle_variation_max_temperature.png",
+  plot = fig_within_cycle_var_max_temp,
+  width = 7,
+  height = 4.5,
+  dpi = 300
+)
+
+ggsave(
+  filename = "figures/monthly_precipitation_rain_frequency.png",
+  plot = fig_monthly_prcp_rain_frequency,
+  width = 7,
+  height = 4.5,
+  dpi = 300
+)
+
+ggsave(
+  filename = "figures/annual_mean_max_temperature_across_years.png",
+  plot = fig_annual_mean_max_temp_across_years,
+  width = 7,
+  height = 4.5,
+  dpi = 300
+)
+
+ggsave(
+  filename = "figures/annual_total_precipitation_across_years.png",
+  plot = fig_annual_total_prcp_across_years,
+  width = 7,
+  height = 4.5,
+  dpi = 300
+)
+
+ggsave(
+  filename = "figures/daily_timeseries_max_temperature.png",
+  plot = fig_daily_timeseries_max_temp,
+  width = 7,
+  height = 4.5,
+  dpi = 300
+)
+
 # Optional: Display Tables in Console ----
 # Code Header:
 # Primary author: Qihaohan
@@ -416,3 +456,162 @@ fig_monthly_temp_pcp <- ggplot(monthly_climate, aes(x = month_num)) +
     x = "Month"
   ) +
   theme_minimal()
+
+# Time series analysis
+# Code Header:
+# Primary author: Jincheng
+# Reviewer: Ata / Qihaohan
+
+library(tidyverse)
+library(lubridate)
+library(scales)
+
+weather <- weather_clean |>
+  mutate(
+    date = as.Date(date),
+    year = year(date),
+    month_num = month(date),
+    month = factor(month.abb[month_num], levels = month.abb),
+    rain_day = prcp > 0,
+    snow_day = snow > 0,
+    freezing_day = tmin <= 32
+  )
+
+## Monthly Within-Cycle Variation Summary
+
+monthly_variation <- weather |>
+  group_by(month_num, month) |>
+  summarise(
+    mean_tmax = mean(tmax, na.rm = TRUE),
+    sd_tmax = sd(tmax, na.rm = TRUE),
+    mean_tmin = mean(tmin, na.rm = TRUE),
+    sd_tmin = sd(tmin, na.rm = TRUE),
+    mean_prcp = mean(prcp, na.rm = TRUE),
+    sd_prcp = sd(prcp, na.rm = TRUE),
+    rain_day_rate = mean(rain_day, na.rm = TRUE),
+    freezing_day_rate = mean(freezing_day, na.rm = TRUE),
+    .groups = "drop"
+  )
+
+monthly_variation
+
+## Plot Monthly Maximum Temperature with Seasonal Variation
+
+fig_within_cycle_var_max_temp <- ggplot(monthly_variation, aes(x = month, y = mean_tmax, group = 1)) +
+  geom_ribbon(
+    aes(
+      ymin = mean_tmax - sd_tmax,
+      ymax = mean_tmax + sd_tmax,
+      group = 1
+    ),
+    alpha = 0.2
+  ) +
+  geom_line(linewidth = 1) +
+  geom_point(size = 2) +
+  labs(
+    title = "Within-Cycle Variation in Maximum Temperature",
+    subtitle = "Monthly mean TMAX with ±1 standard deviation",
+    x = "Month",
+    y = "Maximum Temperature (°F)"
+  ) +
+  theme_minimal()
+
+## Plot Monthly Precipitation and Rain Day Frequency
+
+fig_monthly_prcp_rain_frequency <- ggplot(monthly_variation, aes(x = month, y = mean_prcp, group = 1)) +
+  geom_col(alpha = 0.7) +
+  geom_line(aes(y = rain_day_rate), linewidth = 1) +
+  geom_point(aes(y = rain_day_rate), size = 2) +
+  scale_y_continuous(
+    name = "Mean Daily Precipitation (inch)",
+    sec.axis = sec_axis(~ ., name = "Rain Day Rate")
+  ) +
+  labs(
+    title = "Monthly Precipitation and Rain Day Frequency",
+    subtitle = "Higher precipitation and frequent rain days suggest year-round humidity",
+    x = "Month"
+  ) +
+  theme_minimal()
+
+## Annual Between-Cycle Variation Summary
+
+annual_variation <- weather |>
+  group_by(year) |>
+  summarise(
+    mean_tmax = mean(tmax, na.rm = TRUE),
+    mean_tmin = mean(tmin, na.rm = TRUE),
+    sd_tmax = sd(tmax, na.rm = TRUE),
+    total_prcp = sum(prcp, na.rm = TRUE),
+    total_snow = sum(snow, na.rm = TRUE),
+    rain_days = sum(rain_day, na.rm = TRUE),
+    snow_days = sum(snow_day, na.rm = TRUE),
+    freezing_days = sum(freezing_day, na.rm = TRUE),
+    n_days = n(),
+    .groups = "drop"
+  ) |>
+  filter(n_days >= 300)
+
+annual_variation
+
+## Plot Annual Mean Maximum Temperature Across Years
+
+fig_annual_mean_max_temp_across_years  <- ggplot(annual_variation, aes(x = year, y = mean_tmax)) +
+  geom_line(linewidth = 1) +
+  geom_point(size = 2) +
+  labs(
+    title = "Between-Cycle Variation in Annual Mean Maximum Temperature",
+    subtitle = "Full years only",
+    x = "Year",
+    y = "Annual Mean TMAX (°F)"
+  ) +
+  theme_minimal()
+
+## Plot Annual Total Precipitation Across Years
+
+fig_annual_total_prcp_across_years <- ggplot(annual_variation, aes(x = year, y = total_prcp)) +
+  geom_col(alpha = 0.7) +
+  labs(
+    title = "Between-Cycle Variation in Annual Precipitation",
+    subtitle = "Annual precipitation varies more strongly than annual temperature",
+    x = "Year",
+    y = "Total Annual Precipitation (inch)"
+  ) +
+  theme_minimal()
+
+## Daily Time Series of Maximum Temperature
+
+fig_daily_timeseries_max_temp <- ggplot(weather, aes(x = date, y = tmax)) +
+  geom_line(alpha = 0.35) +
+  geom_smooth(method = "loess", span = 0.08, se = FALSE, linewidth = 1) +
+  labs(
+    title = "Daily Maximum Temperature Over Time",
+    subtitle = "Strong repeated annual cycles are visible across the full period",
+    x = "Date",
+    y = "Maximum Temperature (°F)"
+  ) +
+  theme_minimal()
+
+## Summary Table for Within-Cycle and Between-Cycle Variation
+
+variation_summary <- tibble(
+  dimension = c(
+    "Within-cycle temperature variation",
+    "Within-cycle precipitation variation",
+    "Between-cycle temperature variation",
+    "Between-cycle precipitation variation"
+  ),
+  measure = c(
+    "Monthly mean TMAX range",
+    "Monthly mean PRCP range",
+    "Annual mean TMAX range",
+    "Annual total PRCP range"
+  ),
+  value = c(
+    max(monthly_variation$mean_tmax) - min(monthly_variation$mean_tmax),
+    max(monthly_variation$mean_prcp) - min(monthly_variation$mean_prcp),
+    max(annual_variation$mean_tmax) - min(annual_variation$mean_tmax),
+    max(annual_variation$total_prcp) - min(annual_variation$total_prcp)
+  )
+)
+
+variation_summary
