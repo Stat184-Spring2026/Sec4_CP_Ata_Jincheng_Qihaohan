@@ -43,7 +43,7 @@ The **CARE principles** are less directly applicable because this project does n
 @tbl-annual-summary summarizes the annual weather records. Complete years generally contain 365 or 366 days, while 2016 and 2026 are partial years in this file. For that reason, comparisons involving total precipitation or total snowfall should focus mainly on complete years.
 
 | Year | Days observed | Avg. Maximum Temp | Avg. Minimum Temp | Avg. Daily Temp Range | Total Precipitation | Total Snowfall | Max Snow Depth | Rain Days | Snow Days | Freezing Days |
-|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+|------:|------:|------:|------:|------:|------:|------:|------:|------:|------:|------:|
 | 2016 | 256 | 67.6 | 50.5 | 17.1 | 24.89 | 7.0 | 4 | 102 | 7 | 36 |
 | 2017 | 365 | 59.4 | 43.3 | 16.2 | 42.19 | 37.7 | 10 | 161 | 23 | 114 |
 | 2018 | 365 | 57.9 | 42.8 | 15.1 | 63.75 | 39.1 | 11 | 184 | 24 | 131 |
@@ -71,7 +71,7 @@ The table shows that annual average maximum temperatures for complete years are 
 @tbl-monthly-summary compares monthly averages and totals across the full dataset. This table helps show the seasonal structure of weather in State College.
 
 | Month | Avg. Maximum Temp | Avg. Minimum Temp | Median Daily Precipitation | Total Precipitation | Total Snowfall | Rain Days | Snow Days |
-|:---|---:|---:|---:|---:|---:|---:|---:|
+|:--------|--------:|--------:|--------:|--------:|--------:|--------:|--------:|
 | January | 35.4 | 22.1 | 0.00 | 28.07 | 88.9 | 137 | 65 |
 | February | 40.5 | 24.0 | 0.00 | 29.08 | 76.4 | 113 | 58 |
 | March | 49.0 | 30.3 | 0.00 | 30.71 | 44.3 | 134 | 33 |
@@ -113,13 +113,31 @@ The monthly table shows a clear seasonal temperature cycle. July has the highest
 
 @fig-annual-snowfall shows that snowfall varies substantially from year to year. Among the complete years, 2022 has the highest total snowfall, while 2023 has a much lower snowfall total. This suggests that winter weather in State College can vary considerably even when annual average temperatures are relatively stable.
 
+## Monthly Temperature Distribution
+
+![Boxplots showing the monthly distribution of daily maximum temperature in State College, PA. The line connects monthly median values and shows the overall seasonal temperature trend. Daily maximum temperatures rise from winter to summer, peak in July, and decline through fall.](figures/monthly_boxplot_temp.png){#fig-monthly-temp-boxplot width="85%" fig-alt="Boxplots of daily maximum temperature by month in State College, PA, with a line showing the monthly median trend."}
+
+@fig-monthly-temp-boxplot shows that daily maximum temperatures follow a strong seasonal pattern. Temperatures are lowest in January and February, rise through spring, peak in July, and then decline through fall and early winter. The boxplots also show that temperature variation differs by month. Transitional months such as March, April, October, and November show wider ranges because they include both colder and warmer days. The median trend line makes the annual temperature cycle easier to see while the boxplots preserve the daily-level variation within each month.
+
+## Rainfall and Temperature Diagram
+
+![Rainfall and temperature diagram for State College, PA. The bars show average monthly precipitation, while the line shows average monthly temperature.](figures/monthly_temp_pcp_plot.png){#fig-rainfall-temperature width="85%" fig-alt="Rainfall and temperature diagram showing average monthly precipitation bars and average monthly temperature line for State College, PA."}
+
+@fig-rainfall-temperature shows that State College has both a clear annual temperature cycle and year-round precipitation. Average temperature increases from winter to summer, reaches its highest level in July, and then decreases during fall and winter. Precipitation occurs in every month, with relatively higher values in late spring and summer. This pattern suggests rain-heat synchronization because warmer months also receive substantial precipitation. Overall, the diagram supports the interpretation that State College has a humid climate pattern with warm to hot summers, cold winters, and no obvious dry season.
+
 # Overall Data Story
 
-The exploratory analysis shows that State College has a strong seasonal weather pattern. Temperatures are lowest in winter, rise through spring, peak in summer, and decline through fall. Precipitation occurs throughout the year, but the monthly totals suggest that spring and summer months can contribute heavily to annual precipitation. Snowfall is concentrated in winter and early spring, but the total amount of snowfall varies considerably across years.
+## Overall Data Story
 
-The analysis also highlights the importance of distinguishing daily distributions from monthly or annual totals. For example, many days have no precipitation, but enough rainy days and heavier precipitation events accumulate to create meaningful monthly totals. Similarly, annual averages can look stable while snowfall varies strongly across years.
+The exploratory analysis shows that State College has a strong seasonal weather pattern and a typical humid continental climate structure. Temperatures are lowest in winter, rise through spring, peak in summer, and decline through fall. Both the seasonal boxplots and the monthly temperature distribution confirm that summer has the highest daily maximum temperatures, while winter has the lowest. Spring and fall show broader variation because they are transition seasons between cold and warm conditions.
 
-The partial-year observations for 2016 and 2026 are important context. These years should not be compared directly with full years when interpreting total precipitation, total snowfall, or annual average temperature.
+Precipitation occurs throughout the year rather than being concentrated in a single season. The monthly precipitation totals and the rainfall–temperature diagram show that late spring and summer months contribute more precipitation, while winter precipitation remains lower but is often associated with snowfall. This indicates a pattern of rain–heat synchronization, where warmer months tend to receive relatively more rainfall.
+
+Snowfall is concentrated mainly in winter and early spring, especially from December through March, but the total annual snowfall varies substantially across years. Some years, such as 2022, show much heavier snowfall than others, while annual average temperatures remain relatively stable. This suggests that winter severity can change considerably even without large shifts in annual mean temperature.
+
+The analysis also highlights the importance of distinguishing daily distributions from monthly or annual totals. For example, daily precipitation is strongly right-skewed, meaning that most days have little or no precipitation, while a smaller number of heavy precipitation events contribute substantially to monthly totals. Similarly, monthly boxplots show that average seasonal trends can hide substantial day-to-day variation within each month.
+
+The partial-year observations for 2016 and 2026 are important context. These years should not be compared directly with complete years when interpreting total precipitation, total snowfall, or annual average temperature.
 
 # Open Science and Reproducibility
 
@@ -129,9 +147,9 @@ The project also applies PCIP by making the report readable for a broad audience
 
 # Author Contributions
 
-- **Ata:** Contributed to project planning, data interpretation, and review of weather summaries.
-- **Jincheng:** Contributed to table review, figure interpretation, and report organization.
-- **Qihaohan:** Primary author for the R data cleaning and analysis workflow; contributed to figure generation and report writing.
+-   **Ata:** Contributed to project planning, data interpretation, and review of weather summaries.
+-   **Jincheng:** Contributed to table review, figure interpretation, and report organization.
+-   **Qihaohan:** Primary author for the R data cleaning and analysis workflow; contributed to figure generation and report writing.
 
 # Code Appendix
 
@@ -340,6 +358,96 @@ annual_snowfall_plot <- ggplot(annual_summary, aes(x = factor(year), y = total_s
     x = "Year",
     y = "Total snowfall",
     caption = "Data source: NOAA Climate Data Online, GHCND:USC00368449"
+  ) +
+  theme_minimal()
+```
+
+```{r}
+# Integrate boxplot with time series line representation----
+# Code Header:
+# Primary author: Jincheng
+# Reviewer: Ata / Qihaohan
+
+weather_clean$month <- factor(
+  weather_clean$month,
+  levels = c(
+    "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+    "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+  )
+)
+
+fig_monthly_temp_improved <- ggplot(weather_clean, aes(x = month, y = tmax)) +
+  geom_boxplot(alpha = 0.6) +
+  stat_summary(
+    aes(group = 1),
+    fun = median,
+    geom = "line",
+    linewidth = 1
+  ) +
+  stat_summary(
+    fun = median,
+    geom = "point",
+    size = 2
+  ) +
+  labs(
+    title = "Monthly Distribution of Maximum Temperature",
+    x = "Month",
+    y = "Daily Maximum Temperature (°F)"
+  ) +
+  theme_minimal()
+```
+
+```{r}
+# Temperature-percipitation Plot---
+# Code Header:
+# Primary author: Jincheng
+# Reviewer: Ata / Qihaohan
+
+monthly_climate <- weather_clean %>%
+  group_by(month_num, month) %>%
+  summarise(
+    avg_tmax = mean(tmax, na.rm = TRUE),
+    avg_tmin = mean(tmin, na.rm = TRUE),
+    avg_temp = mean((tmax + tmin) / 2, na.rm = TRUE),
+    avg_monthly_prcp = sum(prcp, na.rm = TRUE) / n_distinct(year),
+    avg_monthly_snow = sum(snow, na.rm = TRUE) / n_distinct(year),
+    avg_rain_days = sum(rain_day, na.rm = TRUE) / n_distinct(year),
+    avg_snow_days = sum(snow_day, na.rm = TRUE) / n_distinct(year),
+    .groups = "drop"
+  ) %>%
+  arrange(month_num)
+
+scale_factor <- max(monthly_climate$avg_temp, na.rm = TRUE) /
+  max(monthly_climate$avg_monthly_prcp, na.rm = TRUE)
+
+fig_monthly_temp_pcp <- ggplot(monthly_climate, aes(x = month_num)) +
+  geom_col(
+    aes(y = avg_monthly_prcp * scale_factor),
+    alpha = 0.45,
+    width = 0.65
+  ) +
+  geom_line(
+    aes(y = avg_temp),
+    linewidth = 1
+  ) +
+  geom_point(
+    aes(y = avg_temp),
+    size = 2
+  ) +
+  scale_x_continuous(
+    breaks = 1:12,
+    labels = monthly_climate$month
+  ) +
+  scale_y_continuous(
+    name = "Average Temperature (°F)",
+    sec.axis = sec_axis(
+      ~ . / scale_factor,
+      name = "Average Monthly Precipitation (inches)"
+    )
+  ) +
+  labs(
+    title = "Rainfall and Temperature Diagram for State College, PA",
+    x = "Month"
   ) +
   theme_minimal()
 ```
