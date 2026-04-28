@@ -43,7 +43,7 @@ The **CARE principles** are less directly applicable because this project does n
 @tbl-annual-summary summarizes the annual weather records. Complete years generally contain 365 or 366 days, while 2016 and 2026 are partial years in this file. For that reason, comparisons involving total precipitation or total snowfall should focus mainly on complete years.
 
 | Year | Days observed | Avg. Maximum Temp | Avg. Minimum Temp | Avg. Daily Temp Range | Total Precipitation | Total Snowfall | Max Snow Depth | Rain Days | Snow Days | Freezing Days |
-|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+|------:|------:|------:|------:|------:|------:|------:|------:|------:|------:|------:|
 | 2016 | 256 | 67.6 | 50.5 | 17.1 | 24.89 | 7.0 | 4 | 102 | 7 | 36 |
 | 2017 | 365 | 59.4 | 43.3 | 16.2 | 42.19 | 37.7 | 10 | 161 | 23 | 114 |
 | 2018 | 365 | 57.9 | 42.8 | 15.1 | 63.75 | 39.1 | 11 | 184 | 24 | 131 |
@@ -71,7 +71,7 @@ The table shows that annual average maximum temperatures for complete years are 
 @tbl-monthly-summary compares monthly averages and totals across the full dataset. This table helps show the seasonal structure of weather in State College.
 
 | Month | Avg. Maximum Temp | Avg. Minimum Temp | Median Daily Precipitation | Total Precipitation | Total Snowfall | Rain Days | Snow Days |
-|:---|---:|---:|---:|---:|---:|---:|---:|
+|:--------|--------:|--------:|--------:|--------:|--------:|--------:|--------:|
 | January | 35.4 | 22.1 | 0.00 | 28.07 | 88.9 | 137 | 65 |
 | February | 40.5 | 24.0 | 0.00 | 29.08 | 76.4 | 113 | 58 |
 | March | 49.0 | 30.3 | 0.00 | 30.71 | 44.3 | 134 | 33 |
@@ -113,13 +113,117 @@ The monthly table shows a clear seasonal temperature cycle. July has the highest
 
 @fig-annual-snowfall shows that snowfall varies substantially from year to year. Among the complete years, 2022 has the highest total snowfall, while 2023 has a much lower snowfall total. This suggests that winter weather in State College can vary considerably even when annual average temperatures are relatively stable.
 
+## Monthly Temperature Distribution
+
+![Boxplots showing the monthly distribution of daily maximum temperature in State College, PA. The line connects monthly median values and shows the overall seasonal temperature trend. Daily maximum temperatures rise from winter to summer, peak in July, and decline through fall.](figures/monthly_boxplot_temp.png){#fig-monthly-temp-boxplot width="85%" fig-alt="Boxplots of daily maximum temperature by month in State College, PA, with a line showing the monthly median trend."}
+
+@fig-monthly-temp-boxplot shows that daily maximum temperatures follow a strong seasonal pattern. Temperatures are lowest in January and February, rise through spring, peak in July, and then decline through fall and early winter. The boxplots also show that temperature variation differs by month. Transitional months such as March, April, October, and November show wider ranges because they include both colder and warmer days. The median trend line makes the annual temperature cycle easier to see while the boxplots preserve the daily-level variation within each month.
+
+## Rainfall and Temperature Diagram
+
+![Rainfall and temperature diagram for State College, PA. The bars show average monthly precipitation, while the line shows average monthly temperature.](figures/monthly_temp_pcp_plot.png){#fig-rainfall-temperature width="85%" fig-alt="Rainfall and temperature diagram showing average monthly precipitation bars and average monthly temperature line for State College, PA."}
+
+@fig-rainfall-temperature shows that State College has both a clear annual temperature cycle and year-round precipitation. Average temperature increases from winter to summer, reaches its highest level in July, and then decreases during fall and winter. Precipitation occurs in every month, with relatively higher values in late spring and summer. This pattern suggests rain-heat synchronization because warmer months also receive substantial precipitation. Overall, the diagram supports the interpretation that State College has a humid climate pattern with warm to hot summers, cold winters, and no obvious dry season.
+
+## Time Series Analysis
+
+### Monthly Within-Cycle Variation Summary
+
+| Month | Mean TMAX | SD TMAX | Mean TMIN | SD TMIN | Mean PRCP | Rain Day Rate | Freezing Day Rate |
+|---------|--------:|--------:|--------:|--------:|--------:|--------:|--------:|
+| Jan | 35.4 | 10.7 | 22.1 | 11.2 | 0.091 | 44.2% | 83.2% |
+| Feb | 40.5 | 11.8 | 24.0 | 9.23 | 0.103 | 40.1% | 83.7% |
+| Mar | 49.0 | 12.1 | 30.3 | 8.90 | 0.099 | 43.4% | 61.3% |
+| Apr | 60.5 | 12.2 | 41.1 | 8.74 | 0.122 | 52.8% | 20.6% |
+| May | 69.1 | 10.4 | 51.2 | 8.06 | 0.158 | 51.6% | 0.6% |
+| Jun | 77.6 | 7.15 | 59.7 | 6.41 | 0.130 | 41.7% | 0.0% |
+| Jul | 83.3 | 4.91 | 65.3 | 4.74 | 0.138 | 41.0% | 0.0% |
+| Aug | 80.6 | 5.80 | 63.0 | 5.39 | 0.139 | 40.0% | 0.0% |
+| Sep | 74.3 | 7.24 | 55.9 | 7.01 | 0.126 | 36.0% | 0.0% |
+| Oct | 63.6 | 9.50 | 45.1 | 8.60 | 0.112 | 38.4% | 3.9% |
+| Nov | 49.8 | 11.0 | 33.2 | 7.42 | 0.087 | 32.3% | 52.3% |
+| Dec | 39.5 | 9.50 | 26.5 | 8.29 | 0.100 | 43.2% | 78.7% |
+
+: Monthly summary of within-cycle variation in temperature, precipitation, rain frequency, and freezing conditions.
+
+The monthly summary shows a strong seasonal cycle in temperature. Maximum temperature increases steadily from winter to summer, peaking in July at 83.3°F, before declining again toward winter. Summer also has the smallest standard deviation, while spring and fall show wider variation. Precipitation remains present throughout the year, with the highest mean daily precipitation in May. Rain day frequency remains relatively high across all months, supporting the interpretation of a humid climate without a clear dry season.
+
+### Within-Cycle Variation in Maximum Temperature
+
+![Line chart showing monthly mean daily maximum temperature with a ±1 standard deviation band. Temperatures rise from winter to summer, peak in July, and decline through fall. The variation band is wider in spring and fall, showing stronger transition-season variability.](figures/within_cycle_variation_max_temperature.png){#fig-within-cycle-temp width="85%" fig-alt="Line chart of monthly mean maximum temperature in State College, PA, with a standard deviation band. Temperatures are lowest in winter, highest in July, and more variable during spring and fall."}
+
+@fig-within-cycle-temp shows a clear annual temperature cycle. Mean maximum temperature rises from about 35°F in January to about 83°F in July, then declines again toward winter. The shaded standard deviation band shows that spring and fall have broader variation, while summer is relatively more stable. This indicates strong within-cycle variation driven by seasonal temperature change.
+
+### Monthly Precipitation and Rain Day Frequency
+
+![Bar and line chart showing monthly mean daily precipitation and rain day frequency. Precipitation occurs throughout the year, with slightly higher values in late spring and summer. Rain day frequency remains substantial across all months.](figures/monthly_precipitation_rain_frequency.png){#fig-monthly-prcp-rain width="85%" fig-alt="Bar and line chart of mean daily precipitation and rain day rate by month in State College, PA. Rainfall is present throughout the year, with higher precipitation in late spring and summer."}
+
+@fig-monthly-prcp-rain shows that precipitation is distributed across the full year rather than concentrated in a single wet season. Mean daily precipitation is highest around May and remains relatively high through summer. Rain day frequency also stays substantial in every month, which supports the interpretation of a humid climate with no clear dry season. The overlap between warmer months and higher precipitation also suggests rain-heat synchrony.
+
+### Annual Between-Cycle Variation Summary
+
+| Year | Mean TMAX | Mean TMIN | SD TMAX | Total PRCP | Total Snow | Rain Days | Snow Days | Freezing Days |
+|--------|-------:|-------:|-------:|-------:|-------:|-------:|-------:|-------:|
+| 2017 | 59.4 | 43.3 | 18.7 | 42.2 | 37.7 | 161 | 23 | 114 |
+| 2018 | 57.9 | 42.8 | 20.3 | 63.8 | 39.1 | 184 | 24 | 131 |
+| 2019 | 59.0 | 42.4 | 19.4 | 41.5 | 32.5 | 155 | 23 | 128 |
+| 2020 | 60.9 | 43.9 | 18.4 | 39.1 | 25.2 | 151 | 19 | 110 |
+| 2021 | 61.7 | 44.0 | 18.7 | 45.9 | 32.3 | 157 | 31 | 121 |
+| 2022 | 60.8 | 41.7 | 19.4 | 39.8 | 43.0 | 147 | 26 | 130 |
+| 2023 | 61.9 | 44.0 | 16.2 | 40.0 | 11.1 | 154 | 16 | 102 |
+| 2024 | 61.6 | 44.4 | 18.0 | 43.2 | 28.0 | 144 | 19 | 100 |
+| 2025 | 59.6 | 42.3 | 19.8 | 38.4 | 21.8 | 142 | 28 | 122 |
+
+: Annual summary of between-cycle variation across complete years only.
+
+The annual summary shows that mean temperature remains relatively stable across years, with most annual mean maximum temperatures staying between 58°F and 62°F. In contrast, total precipitation and snowfall vary much more substantially. For example, 2018 is the wettest year, while 2023 has much lower snowfall. This suggests that temperature is more stable over time, while precipitation and snowfall are more sensitive to year-to-year weather variability.
+
+### Between-Cycle Variation in Annual Mean Maximum Temperature
+
+![Line chart showing annual mean maximum temperature across complete years. Annual temperature varies moderately, with most years falling between about 58°F and 62°F.](figures/annual_mean_max_temperature_across_years.png){#fig-annual-mean-temp width="85%" fig-alt="Line chart of annual mean maximum temperature in State College, PA, using complete years only. Annual mean maximum temperature remains relatively stable across years."}
+
+@fig-annual-mean-temp shows that annual mean maximum temperature varies only moderately across complete years. Most values remain within a narrow range of roughly 58°F to 62°F. Compared with the much larger monthly temperature range, this suggests that between-cycle temperature variation is weaker than within-cycle seasonal variation. In other words, the annual cycle is much stronger than year-to-year temperature fluctuation.
+
+### Between-Cycle Variation in Annual Precipitation
+
+![Bar chart showing total annual precipitation across complete years. Annual precipitation varies more strongly than annual mean temperature, with 2018 standing out as the wettest year.](figures/annual_total_precipitation_across_years.png){#fig-annual-prcp width="85%" fig-alt="Bar chart of total annual precipitation in State College, PA, using complete years only. Annual precipitation varies substantially across years, with 2018 especially high."}
+
+@fig-annual-prcp shows that annual precipitation has much stronger between-cycle variation than annual mean temperature. The wettest year is 2018, with total precipitation above 60 inches, while several other complete years are closer to 40 inches. This suggests that precipitation is more irregular across years than temperature, which is expected because rainfall is more strongly affected by storm systems and short-term atmospheric conditions.
+
+### Daily Time Series of Maximum Temperature
+
+![Daily time series plot showing maximum temperature over time. The gray line shows daily variation, while the smoothed blue line shows repeated annual cycles across the full period.](figures/daily_timeseries_max_temperature.png){#fig-daily-timeseries-temp width="85%" fig-alt="Daily time series of maximum temperature in State College, PA. The series shows repeated annual cycles with strong short-term daily variation."}
+
+@fig-daily-timeseries-temp shows both short-term daily fluctuation and repeated annual cycles. The gray line captures day-to-day weather variability, while the smoothed line shows the broader seasonal pattern. The repeated peaks and troughs across years indicate strong seasonality, with high summer temperatures and low winter temperatures recurring consistently over time. This confirms that the main structure of the temperature series is annual periodicity.
+
+### Summary Table for Within-Cycle and Between-Cycle Variation
+
+| Dimension                             | Measure                 |  Value |
+|---------------------------------------|-------------------------|-------:|
+| Within-cycle temperature variation    | Monthly mean TMAX range |   47.9 |
+| Within-cycle precipitation variation  | Monthly mean PRCP range | 0.0709 |
+| Between-cycle temperature variation   | Annual mean TMAX range  |   4.09 |
+| Between-cycle precipitation variation | Annual total PRCP range |   25.4 |
+
+: Summary comparison of within-cycle and between-cycle variation.
+
+The summary table confirms that temperature is dominated by strong within-cycle seasonal variation, while precipitation shows stronger between-cycle irregularity. Monthly mean maximum temperature changes by nearly 48°F within a year, but annual mean maximum temperature changes by only about 4°F across years. In contrast, annual total precipitation varies substantially between years. This indicates that temperature follows a stable annual cycle, while precipitation is more sensitive to interannual variation.
+
 # Overall Data Story
 
-The exploratory analysis shows that State College has a strong seasonal weather pattern. Temperatures are lowest in winter, rise through spring, peak in summer, and decline through fall. Precipitation occurs throughout the year, but the monthly totals suggest that spring and summer months can contribute heavily to annual precipitation. Snowfall is concentrated in winter and early spring, but the total amount of snowfall varies considerably across years.
+The exploratory analysis shows that State College has a strong seasonal weather pattern and a typical humid continental climate structure. Temperatures are lowest in winter, rise through spring, peak in summer, and decline through fall. Both the seasonal boxplots and the monthly temperature distribution confirm that summer has the highest daily maximum temperatures, while winter has the lowest. Spring and fall show broader variation because they are transition seasons between cold and warm conditions.
 
-The analysis also highlights the importance of distinguishing daily distributions from monthly or annual totals. For example, many days have no precipitation, but enough rainy days and heavier precipitation events accumulate to create meaningful monthly totals. Similarly, annual averages can look stable while snowfall varies strongly across years.
+The time series analysis further confirms that temperature is dominated by strong within-cycle seasonal variation. Monthly mean maximum temperature increases from about 35°F in January to more than 83°F in July before declining again toward winter, creating a clear annual cycle. The standard deviation bands show that summer temperatures are relatively stable, while spring and fall have wider variation due to rapid seasonal transitions. Daily temperature series across the full period also show repeated annual peaks and troughs, indicating that annual periodicity is the main structure of the temperature pattern.
 
-The partial-year observations for 2016 and 2026 are important context. These years should not be compared directly with full years when interpreting total precipitation, total snowfall, or annual average temperature.
+Precipitation occurs throughout the year rather than being concentrated in a single season. The monthly precipitation totals and the rainfall–temperature diagram show that late spring and summer months contribute more precipitation, while winter precipitation remains lower but is often associated with snowfall. This indicates a pattern of rain–heat synchronization, where warmer months tend to receive relatively more rainfall. Rain day frequency also remains relatively high across all months, which supports the classification of a fully humid climate without a clear dry season.
+
+Snowfall is concentrated mainly in winter and early spring, especially from December through March, but the total annual snowfall varies substantially across years. Some years, such as 2022, show much heavier snowfall than others, while annual average temperatures remain relatively stable. This suggests that winter severity can change considerably even without large shifts in annual mean temperature.
+
+The time series comparison between within-cycle and between-cycle variation shows that seasonal temperature change is much stronger than year-to-year temperature fluctuation. Monthly mean maximum temperature varies by nearly 48°F within a year, while annual mean maximum temperature across complete years varies by only about 4°F. In contrast, annual total precipitation varies much more strongly across years, with 2018 standing out as an especially wet year. This suggests that temperature follows a stable long-term seasonal cycle, while precipitation is more sensitive to interannual atmospheric variability.
+
+The analysis also highlights the importance of distinguishing daily distributions from monthly or annual totals. For example, daily precipitation is strongly right-skewed, meaning that most days have little or no precipitation, while a smaller number of heavy precipitation events contribute substantially to monthly totals. Similarly, monthly boxplots show that average seasonal trends can hide substantial day-to-day variation within each month.
+
+The partial-year observations for 2016 and 2026 are important context. These years should not be compared directly with complete years when interpreting total precipitation, total snowfall, or annual average temperature.
 
 # Open Science and Reproducibility
 
@@ -129,9 +233,9 @@ The project also applies PCIP by making the report readable for a broad audience
 
 # Author Contributions
 
-- **Ata:** Contributed to project planning, data interpretation, and review of weather summaries.
-- **Jincheng:** Contributed to table review, figure interpretation, and report organization.
-- **Qihaohan:** Primary author for the R data cleaning and analysis workflow; contributed to figure generation and report writing.
+-   **Ata:** Contributed to project planning, data interpretation, and review of weather summaries.
+-   **Jincheng:** Contributed to table review, figure interpretation, time-series analysis and report organization.
+-   **Qihaohan:** Primary author for the R data cleaning and analysis workflow; contributed to figure generation and report writing.
 
 # Code Appendix
 
@@ -342,4 +446,255 @@ annual_snowfall_plot <- ggplot(annual_summary, aes(x = factor(year), y = total_s
     caption = "Data source: NOAA Climate Data Online, GHCND:USC00368449"
   ) +
   theme_minimal()
+```
+
+```{r}
+# Integrate boxplot with time series line representation----
+# Code Header:
+# Primary author: Jincheng
+# Reviewer: Ata / Qihaohan
+
+weather_clean$month <- factor(
+  weather_clean$month,
+  levels = c(
+    "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+    "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+  )
+)
+
+fig_monthly_temp_improved <- ggplot(weather_clean, aes(x = month, y = tmax)) +
+  geom_boxplot(alpha = 0.6) +
+  stat_summary(
+    aes(group = 1),
+    fun = median,
+    geom = "line",
+    linewidth = 1
+  ) +
+  stat_summary(
+    fun = median,
+    geom = "point",
+    size = 2
+  ) +
+  labs(
+    title = "Monthly Distribution of Maximum Temperature",
+    x = "Month",
+    y = "Daily Maximum Temperature (°F)"
+  ) +
+  theme_minimal()
+```
+
+```{r}
+# Temperature-percipitation Plot---
+# Code Header:
+# Primary author: Jincheng
+# Reviewer: Ata / Qihaohan
+
+monthly_climate <- weather_clean %>%
+  group_by(month_num, month) %>%
+  summarise(
+    avg_tmax = mean(tmax, na.rm = TRUE),
+    avg_tmin = mean(tmin, na.rm = TRUE),
+    avg_temp = mean((tmax + tmin) / 2, na.rm = TRUE),
+    avg_monthly_prcp = sum(prcp, na.rm = TRUE) / n_distinct(year),
+    avg_monthly_snow = sum(snow, na.rm = TRUE) / n_distinct(year),
+    avg_rain_days = sum(rain_day, na.rm = TRUE) / n_distinct(year),
+    avg_snow_days = sum(snow_day, na.rm = TRUE) / n_distinct(year),
+    .groups = "drop"
+  ) %>%
+  arrange(month_num)
+
+scale_factor <- max(monthly_climate$avg_temp, na.rm = TRUE) /
+  max(monthly_climate$avg_monthly_prcp, na.rm = TRUE)
+
+fig_monthly_temp_pcp <- ggplot(monthly_climate, aes(x = month_num)) +
+  geom_col(
+    aes(y = avg_monthly_prcp * scale_factor),
+    alpha = 0.45,
+    width = 0.65
+  ) +
+  geom_line(
+    aes(y = avg_temp),
+    linewidth = 1
+  ) +
+  geom_point(
+    aes(y = avg_temp),
+    size = 2
+  ) +
+  scale_x_continuous(
+    breaks = 1:12,
+    labels = monthly_climate$month
+  ) +
+  scale_y_continuous(
+    name = "Average Temperature (°F)",
+    sec.axis = sec_axis(
+      ~ . / scale_factor,
+      name = "Average Monthly Precipitation (inches)"
+    )
+  ) +
+  labs(
+    title = "Rainfall and Temperature Diagram for State College, PA",
+    x = "Month"
+  ) +
+  theme_minimal()
+```
+
+```{r}
+# Time series analysis
+# Code Header:
+# Primary author: Jincheng
+# Reviewer: Ata / Qihaohan
+
+library(tidyverse)
+library(lubridate)
+library(scales)
+
+weather <- weather_clean |>
+  mutate(
+    date = as.Date(date),
+    year = year(date),
+    month_num = month(date),
+    month = factor(month.abb[month_num], levels = month.abb),
+    rain_day = prcp > 0,
+    snow_day = snow > 0,
+    freezing_day = tmin <= 32
+  )
+
+## Monthly Within-Cycle Variation Summary
+
+monthly_variation <- weather |>
+  group_by(month_num, month) |>
+  summarise(
+    mean_tmax = mean(tmax, na.rm = TRUE),
+    sd_tmax = sd(tmax, na.rm = TRUE),
+    mean_tmin = mean(tmin, na.rm = TRUE),
+    sd_tmin = sd(tmin, na.rm = TRUE),
+    mean_prcp = mean(prcp, na.rm = TRUE),
+    sd_prcp = sd(prcp, na.rm = TRUE),
+    rain_day_rate = mean(rain_day, na.rm = TRUE),
+    freezing_day_rate = mean(freezing_day, na.rm = TRUE),
+    .groups = "drop"
+  )
+
+monthly_variation
+
+## Plot Monthly Maximum Temperature with Seasonal Variation
+
+fig_within_cycle_var_max_temp <- ggplot(monthly_variation, aes(x = month, y = mean_tmax, group = 1)) +
+  geom_ribbon(
+    aes(
+      ymin = mean_tmax - sd_tmax,
+      ymax = mean_tmax + sd_tmax,
+      group = 1
+    ),
+    alpha = 0.2
+  ) +
+  geom_line(linewidth = 1) +
+  geom_point(size = 2) +
+  labs(
+    title = "Within-Cycle Variation in Maximum Temperature",
+    subtitle = "Monthly mean TMAX with ±1 standard deviation",
+    x = "Month",
+    y = "Maximum Temperature (°F)"
+  ) +
+  theme_minimal()
+
+## Plot Monthly Precipitation and Rain Day Frequency
+
+fig_monthly_prcp_rain_frequency <- ggplot(monthly_variation, aes(x = month, y = mean_prcp, group = 1)) +
+  geom_col(alpha = 0.7) +
+  geom_line(aes(y = rain_day_rate), linewidth = 1) +
+  geom_point(aes(y = rain_day_rate), size = 2) +
+  scale_y_continuous(
+    name = "Mean Daily Precipitation (inch)",
+    sec.axis = sec_axis(~ ., name = "Rain Day Rate")
+  ) +
+  labs(
+    title = "Monthly Precipitation and Rain Day Frequency",
+    subtitle = "Higher precipitation and frequent rain days suggest year-round humidity",
+    x = "Month"
+  ) +
+  theme_minimal()
+
+## Annual Between-Cycle Variation Summary
+
+annual_variation <- weather |>
+  group_by(year) |>
+  summarise(
+    mean_tmax = mean(tmax, na.rm = TRUE),
+    mean_tmin = mean(tmin, na.rm = TRUE),
+    sd_tmax = sd(tmax, na.rm = TRUE),
+    total_prcp = sum(prcp, na.rm = TRUE),
+    total_snow = sum(snow, na.rm = TRUE),
+    rain_days = sum(rain_day, na.rm = TRUE),
+    snow_days = sum(snow_day, na.rm = TRUE),
+    freezing_days = sum(freezing_day, na.rm = TRUE),
+    n_days = n(),
+    .groups = "drop"
+  ) |>
+  filter(n_days >= 300)
+
+annual_variation
+
+## Plot Annual Mean Maximum Temperature Across Years
+
+fig_annual_mean_max_temp_across_years  <- ggplot(annual_variation, aes(x = year, y = mean_tmax)) +
+  geom_line(linewidth = 1) +
+  geom_point(size = 2) +
+  labs(
+    title = "Between-Cycle Variation in Annual Mean Maximum Temperature",
+    subtitle = "Full years only",
+    x = "Year",
+    y = "Annual Mean TMAX (°F)"
+  ) +
+  theme_minimal()
+
+## Plot Annual Total Precipitation Across Years
+
+fig_annual_total_prcp_across_years <- ggplot(annual_variation, aes(x = year, y = total_prcp)) +
+  geom_col(alpha = 0.7) +
+  labs(
+    title = "Between-Cycle Variation in Annual Precipitation",
+    subtitle = "Annual precipitation varies more strongly than annual temperature",
+    x = "Year",
+    y = "Total Annual Precipitation (inch)"
+  ) +
+  theme_minimal()
+
+## Daily Time Series of Maximum Temperature
+
+fig_daily_timeseries_max_temp <- ggplot(weather, aes(x = date, y = tmax)) +
+  geom_line(alpha = 0.35) +
+  geom_smooth(method = "loess", span = 0.08, se = FALSE, linewidth = 1) +
+  labs(
+    title = "Daily Maximum Temperature Over Time",
+    subtitle = "Strong repeated annual cycles are visible across the full period",
+    x = "Date",
+    y = "Maximum Temperature (°F)"
+  ) +
+  theme_minimal()
+
+## Summary Table for Within-Cycle and Between-Cycle Variation
+
+variation_summary <- tibble(
+  dimension = c(
+    "Within-cycle temperature variation",
+    "Within-cycle precipitation variation",
+    "Between-cycle temperature variation",
+    "Between-cycle precipitation variation"
+  ),
+  measure = c(
+    "Monthly mean TMAX range",
+    "Monthly mean PRCP range",
+    "Annual mean TMAX range",
+    "Annual total PRCP range"
+  ),
+  value = c(
+    max(monthly_variation$mean_tmax) - min(monthly_variation$mean_tmax),
+    max(monthly_variation$mean_prcp) - min(monthly_variation$mean_prcp),
+    max(annual_variation$mean_tmax) - min(annual_variation$mean_tmax),
+    max(annual_variation$total_prcp) - min(annual_variation$total_prcp)
+  )
+)
+
+variation_summary
 ```

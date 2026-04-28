@@ -14,11 +14,11 @@ Our main topic is daily weather patterns in State College, Pennsylvania.
 
 Main variables of interest:
 
-- TMAX: (maximum temperature)
-- TMIN: (minimum temperature)
-- PRCP: (precipitation)
-- SNOW: (snowfall)
-- SNWD: (snow depth)
+-   TMAX: (maximum temperature)
+-   TMIN: (minimum temperature)
+-   PRCP: (precipitation)
+-   SNOW: (snowfall)
+-   SNWD: (snow depth)
 
 Within this broader project, we are especially interested in exploring rainfall and precipitation patterns in State College over time.
 
@@ -28,11 +28,11 @@ What patterns can we observe in daily weather in State College, Pennsylvania ove
 
 ## Possible Sub Questions
 
-- How do maximum and minimum temperatures change across months and seasons?
-- Which months or seasons tend to have the most precipitation?
-- How does rainfall vary from year to year?
-- How does snowfall differ across winters?
-- Are there noticeable differences in weather conditions across years?
+-   How do maximum and minimum temperatures change across months and seasons?
+-   Which months or seasons tend to have the most precipitation?
+-   How does rainfall vary from year to year?
+-   How does snowfall differ across winters?
+-   Are there noticeable differences in weather conditions across years?
 
 ## Data Source
 
@@ -40,15 +40,15 @@ Our main data source is NOAA Climate Data Online.
 
 Dataset information:
 
-- Source: NOAA Climate Data Online
-- Station: STATE COLLEGE, PA US
-- Station ID: GHCND:USC00368449
-- File used for this project: NOAA daily weather data downloaded as a CSV file
+-   Source: NOAA Climate Data Online
+-   Station: STATE COLLEGE, PA US
+-   Station ID: GHCND:USC00368449
+-   File used for this project: NOAA daily weather data downloaded as a CSV file
 
 URLs:
 
-- https://www.ncdc.noaa.gov/cdo-web/
-- https://www.ncdc.noaa.gov/cdo-web/datasets/GHCND/stations/GHCND:USC00368449/detail
+-   <https://www.ncdc.noaa.gov/cdo-web/>
+-   <https://www.ncdc.noaa.gov/cdo-web/datasets/GHCND/stations/GHCND:USC00368449/detail>
 
 We acknowledge NOAA as the original source of the weather data used in this project.
 
@@ -56,53 +56,54 @@ We acknowledge NOAA as the original source of the weather data used in this proj
 
 Our team plans to import the NOAA weather data into R, clean and organize it, and then carry out exploratory data analysis focused on daily weather patterns in State College. We plan to create helpful variables such as month, year, and season so that we can compare weather conditions across time more clearly.
 
-We will create multiple graphs and tables to examine temperature patterns, precipitation patterns, rainfall trends, snowfall differences, and seasonal weather variation. We also plan to describe the data provenance, discuss FAIR and CARE principles, and organize our final work into a reproducible QMD report that renders to PDF. These are part of the course project requirements.  [oai_citation:0‡Spring2026_Project_Guidelines.docx](sediment://file_0000000072e071fd99d3dd4be5fc1070)
+We will create multiple graphs and tables to examine temperature patterns, precipitation patterns, rainfall trends, snowfall differences, and seasonal weather variation. We also plan to describe the data provenance, discuss FAIR and CARE principles, and organize our final work into a reproducible QMD report that renders to PDF. These are part of the course project requirements. [oai_citation:0‡Spring2026_Project_Guidelines.docx](sediment://file_0000000072e071fd99d3dd4be5fc1070)
 
 ## Repo Structure
 
-`README.md`  
+`README.md`\
 General overview of the project, topic, goals, and data source.
 
-`SC_weather_10.csv`  
+`SC_weather_10.csv`\
 Main NOAA weather State College, PA 10 year dataset used for the project.
 
-`Project_Guidelines.md`  
+`Project_Guidelines.md`\
 Course project guidelines and requirements.
 
-`.gitignore`  
+`.gitignore`\
 Git ignore file from the course template.
 
-`.lintr`  
+`.lintr`\
 Linting configuration file from the course template.
 
-`linting_script.R`  
+`linting_script.R`\
 Linting script included with the course template.
 
-`apa7.csl` and `MLA9.csl`  
+`apa7.csl` and `MLA9.csl`\
 Citation style files included with the course template.
 
 Additional files will be added as the project develops, such as the QMD report, cleaned data files, figures, tables, and planning documents.
 
 ## Team Members
 
-- Ata
-- Jincheng
-- Qihaohan
+-   Ata
+-   Jincheng
+-   Qihaohan
 
 This is a team project for STAT 184 Section 4.
 
 ## Workflow
 
-Our team plans to use GitHub to organize and manage the project. We will keep a main branch and create one development branch for each team member. We will use issues to track work, pull requests to merge work into the main branch, and commit messages that clearly describe what was changed. 
+Our team plans to use GitHub to organize and manage the project. We will keep a main branch and create one development branch for each team member. We will use issues to track work, pull requests to merge work into the main branch, and commit messages that clearly describe what was changed.
 
 ## Project Goals
 
-- Explore daily weather patterns in State College, PA
-- Study how temperature, precipitation, snowfall, and snow depth change over time
-- Pay special attention to rainfall and precipitation patterns
-- Create clear and professional data visualizations and summary tables
-- Write a reproducible and organized report in R and Quarto
-- Work collaboratively as a team using GitHub
+-   Explore daily weather patterns in State College, PA
+-   Study how temperature, precipitation, snowfall, and snow depth change over time
+-   Pay special attention to rainfall and precipitation patterns
+-   Create clear and professional data visualizations and summary tables
+-   Make brief time-series analysis on weather data
+-   Write a reproducible and organized report in R and Quarto
+-   Work collaboratively as a team using GitHub
 
 ## Notes
 
