@@ -314,3 +314,89 @@ kable(
   monthly_weather_table,
   caption = "Monthly weather summary for State College, PA."
 )
+
+# Integrate boxplot with time series line representation----
+# Code Header:
+# Primary author: Jincheng
+# Reviewer: Ata / Qihaohan
+
+weather_clean$month <- factor(
+  weather_clean$month,
+  levels = c(
+    "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+    "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+  )
+)
+
+fig_monthly_temp_improved <- ggplot(weather_clean, aes(x = month, y = tmax)) +
+  geom_boxplot(alpha = 0.6) +
+  stat_summary(
+    aes(group = 1),
+    fun = median,
+    geom = "line",
+    linewidth = 1
+  ) +
+  stat_summary(
+    fun = median,
+    geom = "point",
+    size = 2
+  ) +
+  labs(
+    title = "Monthly Distribution of Maximum Temperature",
+    x = "Month",
+    y = "Daily Maximum Temperature (°F)"
+  ) +
+  theme_minimal()
+
+# Temperature-percipitation Plot---
+# Code Header:
+# Primary author: Jincheng
+# Reviewer: Ata / Qihaohan
+
+monthly_climate <- weather_clean %>%
+  group_by(month_num, month) %>%
+  summarise(
+    avg_tmax = mean(tmax, na.rm = TRUE),
+    avg_tmin = mean(tmin, na.rm = TRUE),
+    avg_temp = mean((tmax + tmin) / 2, na.rm = TRUE),
+    avg_monthly_prcp = sum(prcp, na.rm = TRUE) / n_distinct(year),
+    avg_monthly_snow = sum(snow, na.rm = TRUE) / n_distinct(year),
+    avg_rain_days = sum(rain_day, na.rm = TRUE) / n_distinct(year),
+    avg_snow_days = sum(snow_day, na.rm = TRUE) / n_distinct(year),
+    .groups = "drop"
+  ) %>%
+  arrange(month_num)
+
+scale_factor <- max(monthly_climate$avg_temp, na.rm = TRUE) /
+  max(monthly_climate$avg_monthly_prcp, na.rm = TRUE)
+
+fig_monthly_temp_pcp <- ggplot(monthly_climate, aes(x = month_num)) +
+  geom_col(
+    aes(y = avg_monthly_prcp * scale_factor),
+    alpha = 0.45,
+    width = 0.65
+  ) +
+  geom_line(
+    aes(y = avg_temp),
+    linewidth = 1
+  ) +
+  geom_point(
+    aes(y = avg_temp),
+    size = 2
+  ) +
+  scale_x_continuous(
+    breaks = 1:12,
+    labels = monthly_climate$month
+  ) +
+  scale_y_continuous(
+    name = "Average Temperature (°F)",
+    sec.axis = sec_axis(
+      ~ . / scale_factor,
+      name = "Average Monthly Precipitation (inches)"
+    )
+  ) +
+  labs(
+    title = "Rainfall and Temperature Diagram for State College, PA",
+    x = "Month"
+  ) +
+  theme_minimal()
